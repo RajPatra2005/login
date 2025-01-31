@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Registration Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #ffaf00, #bb02ff);
+            background-attachment: fixed;
+        }
+
+        .container {
+            position: relative;
+            width: 1150px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .container .form-box {
+            position: relative;
+            width: 500px;
+            height: 600px;
+            background: #fff;
+            padding: 40px;
+            margin: 20px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .container .form-box.register {
+            display: none;
+        }
+
+        .container .form-box.active {
+            display: block;
+        }
+
+        .form-box h2 {
+            font-size: 2em;
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-box .input-box {
+            position: relative;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .form-box .input-box input {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #333;
+            border: none;
+            border-bottom: 2px solid #333;
+            outline: none;
+            background: transparent;
+        }
+
+        .form-box .input-box label {
+            position: absolute;
+            left: 0;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #666;
+            pointer-events: none;
+            transition: 0.5s;
+        }
+
+        .form-box .input-box input:focus ~ label,
+        .form-box .input-box input:valid ~ label {
+            transform: translateY(-20px);
+            font-size: 12px;
+            color: #bb02ff;
+        }
+
+        .form-box .input-box input:focus,
+        .form-box .input-box input:valid {
+            border-bottom: 2px solid #bb02ff;
+        }
+
+        .form-box .btn {
+            position: relative;
+            display: inline-block;
+            padding: 12px 30px;
+            color: #fff;
+            background: #bb02ff;
+            border: none;
+            border-radius: 40px;
+            font-size: 16px;
+            letter-spacing: 1px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+
+        .form-box .btn:hover {
+            background: #ffaf00;
+        }
+
+        .form-box .switch-form {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .form-box .switch-form a {
+            color: #bb02ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .form-box .switch-form a:hover {
+            color: #ffaf00;
+        }
+
+        .terms {
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        .terms input {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Form -->
+        <div class="form-box active" id="loginForm">
+            <h2>Login</h2>
+            <form id="login" onsubmit="return validateLoginForm()">
+                <div class="input-box">
+                    <input type="email" id="loginEmail" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="loginPassword" required>
+                    <label>Password</label>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <div class="switch-form">
+                    Don't have an account? <a href="#" onclick="switchForm('register')">Register</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Registration Form -->
+        <div class="form-box register" id="registerForm">
+            <h2>Register</h2>
+            <form id="register" onsubmit="return validateRegisterForm()">
+                <div class="input-box">
+                    <input type="text" id="username" required>
+                    <label>Username</label>
+                </div>
+                <div class="input-box">
+                    <input type="email" id="email" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="password" required>
+                    <label>Password</label>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="confirmPassword" required>
+                    <label>Confirm Password</label>
+                </div>
+                <div class="terms">
+                    <input type="checkbox" id="terms" required>
+                    <label>I agree to the terms & conditions</label>
+                </div>
+                <button type="submit" class="btn">Register</button>
+                <div class="switch-form">
+                    Already have an account? <a href="#" onclick="switchForm('login')">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function switchForm(formType) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            
+            if(formType === 'register') {
+                loginForm.classList.remove('active');
+                registerForm.classList.add('active');
+            } else {
+                registerForm.classList.remove('active');
+                loginForm.classList.add('active');
+            }
+        }
+
+        function validateLoginForm() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if(!email || !password) {
+                alert('Please fill in all fields');
+                return false;
+            }
+
+            // Add your login validation logic here
+            alert('Login successful!');
+            return false; // Prevent form submission for this example
+        }
+
+        function validateRegisterForm() {
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const terms = document.getElementById('terms').checked;
+
+            if(!username || !email || !password || !confirmPassword) {
+                alert('Please fill in all fields');
+                return false;
+            }
+
+            if(password !== confirmPassword) {
+                alert('Passwords do not match');
+                return false;
+            }
+
+            if(!terms) {
+                alert('You must agree to the terms & conditions');
+                return false;
+            }
+
+            // Add your registration logic here
+            alert('Registration successful!');
+            return false; // Prevent form submission for this example
+        }
+    </script>
+</body>
+</html>
